@@ -1,0 +1,408 @@
+
+hostname COREbaba-12
+enable secret pass
+service password-encryption
+no logging console
+no id domain-lookup
+line console 0
+ passwod pass
+ login
+ exec-timeout 0 0
+line vty 0 14
+ password pass
+ login
+ exec-timeout 0 0
+end
+
+config t
+sdm prefer dual-ipv4-and-ipv6 routing
+end
+wr
+end
+wr
+
+sh sdm prefer dual-ipv4-and-ipv6 routing
+
+PC Only (ipv4)
+Task 2
+config t
+ip routing
+ipv6 unicast-routing
+int vlan 1
+no shut
+ip add 10.12.1.4 255.255.255.0
+ipv6 enable
+ipv6 address cafe:cafe:cafe:cafe::eeee/64
+end
+
+TASK 3:
+IPV6 DHCP SERVER FOR DATACENTER:
+config t
+int vlan 5
+ipv6 enable
+ipv6 add baba:baba:baba:0380::1/57
+ipv6 dhcp server 512OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 512OFFICE
+ address prefix baba:baba:baba:0380::/57
+int fa0/5
+ shut
+ no shut
+ switchport access vlan 5
+int fa0/7
+ shut
+ no shut
+ switchport access vlan 5
+end
+
+IPv4:
+config t
+vlan 108
+name 8OFFICE
+int vlan 108
+ no shutdown
+ ip address 10.32.0.1 255.224.0.0
+ip dhcp excluded-add 10.32.0.1 10.32.0.99
+ip dhcp pool 8OFFICE
+ network 10.32.0.0 255.224.0.0
+ default-router 10.32.0.1
+ domain-name NETB.ARMY.MIL.PH
+ dns-server 8.8.8.8
+end
+
+config t
+vlan 5
+name 512OFFICE
+int vlan 5
+ no shutdown
+ ip address 172.16.0.129 255.255.255.128
+ip dhcp excluded-add 172.16.0.129 172.16.0.139
+ip dhcp pool 512OFFICE
+ network 172.16.0.128 255.255.255.128
+ default-router 172.16.0.129
+ domain-name NETB.ARMY.MIL.PH
+ dns-server 8.8.8.8
+int fa0/5
+ shut
+ no shut
+ switchport access vlan 5
+int fa0/7
+ shut
+ no shut
+switchport access vlan 5
+end
+
+talking to linux
+ rm -r /etc/udev/rules.d/70-persistent.net
+
+route add 88.0.0.0 mask 255.0.0.0 10.12.1.4
+kill the internet
+route delete 0.0.0.0
+
+route cisco
+r4
+config t
+IP ROUTE 10.1.1.0 255.255.255.252 10.1.1.9
+r2 pakilala si 10.1.1.8/30
+config t
+IP ROUTE 10.1.1.8 255.255.255.252 10.1.1.6
+config t
+ip route 10.1.1.8 255.255.255.252 10.1.1.6
+ip route 10.1.1.0 255.255.255.252 10.1.1.9
+
+r3 pakilala 10.1.1.0/30
+config t 
+ip route 10.1.1.0 255.255.255.252 10.1.1.5
+
+r1 pakilala si 10.1.1.4/30
+config t 
+ip route 10.1.1.4 255.255.255.252 10.1.1.2
+ip route 10.1.1.8 255.255.255.252 10.1.1.2
+
+load balance
+r1 have 3 telco pldt globe converge
+failover/floating static routes:
+config t
+ip route 0.0.0.0 0.0.0.0 209.9.9.3 1
+ip route 0.0.0.0 0.0.0.0 207.7.7.2 2
+ip route 0.0.0.0 0.0.0.0 208.8.8.4 3
+
+
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+config t
+NO ip access-list standard NOPORN
+ip access-list standard NOPORN
+DENY 66.254.0.0 0.0.255.255
+deny 161.49.0.0 0.0.255.255
+DENY 104.21.0.0 0.0.255.255
+DENY 68.235.0.0 0.0.255.255
+DENY 104.17.0.0 0.0.255.255
+DENY 88.208.0.0 0.0.255.255
+DENY 208.77.0.0 0.0.255.255
+DENY 172.67.0.0 0.0.255.255
+Permit Any
+Int Gi 1
+ ip access-group NOPORN in
+end
+
+config t
+NO ip access-list standard NOTORS
+ip access-list standard NOTORS
+DENY   162.159.0.0   0.0.255.255
+DENY   104.21.0.0   0.0.255.255
+DENY   172.67.0.0   0.0.255.255
+DENY   84.32.0.0   0.0.255.255
+DENY   76.223.0.0   0.0.255.255
+DENY   13.248.0.0   0.0.255.255
+DENY   104.0.0.0   0.255.255.255
+DENY   95.211.0.0   0.0.255.255
+Permit Any
+Int Gi 1
+ ip access-group NOTORS in
+end
+
+config t
+no access-list 8
+access-list 8 permit any
+Int Gi 3
+ ip nat Inside
+Int gi 1
+ ip nat Outside
+IP Nat inside source static tcp 192.168.103.21 80 208.8.8.169 80
+IP Nat inside source static tcp 192.168.103.21 443 208.8.8.169 443
+IP Nat inside source static tcp 192.168.103.22 80 208.8.8.169 8080
+IP Nat inside source static tcp 192.168.103.22 443 208.8.8.169 8443
+IP nat inside source list 8 int gi 1 Overload
+end
+show ip nat translation
+
+ WHY IMPLIMENT VPN/encrypted traffic in MILITARY COMS
+config t
+monitor session 1 source interface fa0/5,fa0/7 both
+monitor session 1 destination interface fa0/1
+end
+
+rtp || sip
+
+congresman: pahingi ng 25% worth 250 mil para sa ghost project sa bulacan at mimaropa. 
+"padala mo sa pink na maleta"
+district engr: "mag resoltsworlds muna ako para malinis ang pera. padala ko sa ex marines sa bgc"
+
+no monitor session 1
+
+sudo su
+ifconfig eth0 11.11.11.100 netmask 255.255.255.224 up
+route add default gw 11.11.11.113
+ping 11.11.11.113
+
+ Day5 Friday
+config t
+   hostname COREbaba-12
+   enable secret pass
+   service password-encryption
+   no logging console
+   no ip domain-lookup
+   line console 0
+     password pass
+     login
+     exec-timeout 0 0
+    line vty 0 14
+      password pass
+      login
+      exec-timeout 0 0
+   Int Gi 0/1
+     no shutdown
+	  no switchport
+	  ip add 10.12.12.4 255.255.255.0
+   Int Vlan 1
+     no shutdown
+	 ip add 10.12.1.4 255.255.255.0
+	 description MGMTDATA
+   Int Vlan 10
+     no shutdown
+	 ip add 10.12.10.4 255.255.255.0
+	 description WIRELESS
+   Int Vlan 50
+     no shutdown
+	 ip add 10.12.50.4 255.255.255.0
+	 description IPCCTV
+   Int Vlan 100
+     no shutdown
+	 ip add 10.12.100.4 255.255.255.0
+	 description VOICEVLAN
+
+config t
+   hostname COREtaas12
+   enable secret pass
+   service password-encryption
+   no logging console
+   no ip domain-lookup
+   line console 0
+     password pass
+     login
+     exec-timeout 0 0
+    line vty 0 14
+      password pass
+      login
+      exec-timeout 0 0
+   Int Vlan 1
+     no shutdown
+	 ip add 10.12.1.2 255.255.255.0
+	 description MGMTDATA
+   Int Vlan 10
+     no shutdown
+	 ip add 10.12.10.2 255.255.255.0
+	 description WIRELESS
+   Int Vlan 50
+     no shutdown
+	 ip add 10.12.50.2 255.255.255.0
+	 description IPCCTV
+   Int Vlan 100
+     no shutdown
+	 ip add 10.12.100.2 255.255.255.0
+	 description VOICEVLAN
+end
+
+!@@@LeafSwitchONLY
+config t
+   hostname COREbaba12
+   enable secret pass
+   service password-encryption
+   no logging console
+   no ip domain-lookup
+   line console 0
+     password pass
+     login
+     exec-timeout 0 0
+    line vty 0 14
+      password pass
+      login
+      exec-timeout 0 0
+   Int Gi 0/1
+     no shutdown
+	  no switchport
+	  ip add 10.12.12.4 255.255.255.0
+   Int Vlan 1
+     no shutdown
+	 ip add 10.12.1.4 255.255.255.0
+	 description MGMTDATA
+   Int Vlan 10
+     no shutdown
+	 ip add 10.12.10.4 255.255.255.0
+	 description WIRELESS
+   Int Vlan 50
+     no shutdown
+	 ip add 10.12.50.4 255.255.255.0
+	 description IPCCTV
+   Int Vlan 100
+     no shutdown
+	 ip add 10.12.100.4 255.255.255.0
+	 description VOICEVLAN
+end
+
+If magpahiram ng cisco factory reset
+erase startup- config 
+delete flash:vlan.dat
+reload
+
+d:\sources\sxs
+
+copy run start
+enter
+
+Task 2windows dns and cisco are bestfriend:
+Domain: army12.mail.ph
+
+TASK 3: windows ftp server and cisco are toxic friends.
+
+TASK6: HOW TO GET FIRED IMMEDIATELY!
+SIRAIN NG TODO SI PASTE MUNA KAY BABA, TAPOS KAY TAAS!
+config t
+NO spanning-tree vlan 1-999
+end
+AYUSIN ULET IS @taas: AT @baba
+config t
+ spanning-tree vlan 1-999
+end
+
+TAAS/BABA:
+config t
+Int Range fa0/10-12
+ shutdown
+ switchport trunk Encap Dot1Q
+ switchport mode trunk
+ switchport trunk allowed vlan 1-100
+ switchport trunk native vlan 1
+ no shut
+ do sh int trunk
+
+TASK9: SPANNING-TREE PROTOCOL: 802.1D: protect switches Slowly.
+blk-lis-lrn-fwd = 30 seconds.
+wireshark = bridge priority is 32768 = very Hackable!
+" bobo/inutil ang Network Engineer nyo sa company!"
+Protect the Most Important SWitch in your 
+Office: RootBridge = TAAS, 2ndRootBridge = BABA:
+TAAS:/d1       32786 --> 24576
+Config t
+spanning-tree mode pvst
+spanning-tree vlan 1-100 root Primary
+do sh spanning-tree vlan 1
+
+
+config t
+Int fa0/5
+switchport mode access
+switchport port-security
+switchport port-security mac-address Sticky
+switchport port-security maximum 1
+switchport port-security violation shutdown
+Int fa0/7
+switchport mode access
+switchport port-security
+switchport port-security mac-address Sticky
+switchport port-security maximum 1
+switchport port-security violation shutdown
+do sh port-security address
+
+config t
+Int fa0/5
+NO switchport port-security
+shut
+no shut
+Int fa0/7
+NO switchport port-security
+shut
+no shut
+
+config t
+hostname PLDT-ITO
+Track 1 Int gi 0/1 line-protocol
+Int vlan 1
+standby 1 ip 10.12.1.6
+standby 1 preempt
+standby 1 Priority 150
+standby 1 Track 1 decrement 60
+end
+
+COREBABA/GLOBE:
+config t
+hostname GLOBE-ITO
+Int vlan 1
+standby 1 ip 10.12.1.6
+standby 1 preempt
+standby 1 Priority 100
+end
+
+TASK17: Port-Aggregation/Etherchannel: 100% exam LAB!!!
+LACP:LINK AGGREGATION CONTROL PROTOCOL = ieee worldStandrad
+cisco = PortAggregationProtocol: PaGP
+Combinding Two/More Layer 2 links AS ONE! Unite/UNITY
+@taas/BABA:
+config t
+Int Range fa0/10-12
+ channel-group 1 mode active
+ channel-protocol Lacp
+ do sh etherchannel summary
+ do sh int po1 | inc BW
